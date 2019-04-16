@@ -1,5 +1,6 @@
 
-![Alt Text](https://media.giphy.com/media/vwFITsRSS3cbgFNuaY/giphy.gif)
+<img src="https://media.giphy.com/media/vwFITsRSS3cbgFNuaY/giphy.gif" width="900" height="500" />
+
 
 ```python
 # Canny edge detection 
