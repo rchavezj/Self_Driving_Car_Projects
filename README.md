@@ -7,4 +7,4 @@ This repo contains any related projects related to self driving cars
 
 ## [Finding Lanes (OpenCV)](https://github.com/rchavezj/Self_Driving_Car_Projects/tree/master/Finding_Lanes)
 
-<img src="https://media.giphy.com/media/vwFITsRSS3cbgFNuaY/giphy.gif" width="400" height="400" />
+<img src="https://media.giphy.com/media/vwFITsRSS3cbgFNuaY/giphy.gif" width="800" height="400" />
