@@ -1,5 +1,5 @@
 
-![alt text](https://github.com/rchavezj/Self_Driving_Car_Projects/blob/master/Finding_Lanes/images/findingLanes.png)
+![Alt Text](https://media.giphy.com/media/vwFITsRSS3cbgFNuaY/giphy.gif)
 
 ```python
 # Canny edge detection 
