@@ -7,32 +7,44 @@ import base64
 from io import BytesIO
 from PIL import Image
 import cv2
+
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
  
 sio = socketio.Server()
  
 app = Flask(__name__) #'__main__'
-speed_limit = 50
+speed_limit = 5
 def img_preprocess(img):
-    img = img[60:135,:,:]
-    img = cv2.cvtColor(img, cv2.COLOR_RGB2YUV)
-    img = cv2.GaussianBlur(img,  (3, 3), 0)
-    img = cv2.resize(img, (200, 66))
-    img = img/255
-    return img
+    new_img = img[50:140,:,:]
+    # apply subtle blur
+    new_img = cv2.GaussianBlur(new_img, (3,3), 0)
+    # scale to 66x200x3 (same as nVidia)
+    new_img = cv2.resize(new_img,(200, 66), interpolation = cv2.INTER_AREA)
+    # scale to ?x?x3
+    #new_img = cv2.resize(new_img,(80, 10), interpolation = cv2.INTER_AREA)
+    # convert to YUV color space (as nVidia paper suggests)
+    new_img = cv2.cvtColor(new_img, cv2.COLOR_BGR2YUV)
+    return new_img
+ 
  
 @sio.on('telemetry')
 def telemetry(sid, data):
     speed = float(data['speed'])
     image = Image.open(BytesIO(base64.b64decode(data['image'])))
     image = np.asarray(image)
-    preprocessed_image = img_preprocess(image)
-    preprocessed_image = np.array([preprocessed_image])
-
-    steering_angle = float(model.predict(preprocessed_image))
+    image = img_preprocess(image)
+    print(image.shape)
+    # imgplot = plt.imshow(image)
+    # plt.show()
+    image = np.array([image])
+    print(image.shape)
+    steering_angle = (float(model.predict(image)) + 6.3)/2
     throttle = 1.0 - speed/speed_limit
     print('{} {} {}'.format(steering_angle, throttle, speed))
-    # exit()
     send_control(steering_angle, throttle)
+ 
+ 
  
 @sio.on('connect')
 def connect(sid, environ):
