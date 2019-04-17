@@ -1,10 +1,16 @@
+# Finding Lanes
 
-![alt text](https://github.com/rchavezj/Self_Driving_Car_Projects/blob/master/Finding_Lanes/images/findingLanes.png)
+The goal of this project is to detect lanes on the street using computer vision framework OpenCV. 
 
+<img src="https://media.giphy.com/media/vwFITsRSS3cbgFNuaY/giphy.gif" width="900" height="500" />
+
+This pipeline required the following techniques: Canny edge detection, region of interest, Hough Transform and Optimizing slopes
+
+
+Canny edge detection 
+It's easier to find edges between pixels if 
+we're able to convert the enire image into gray. 
 ```python
-# Canny edge detection 
-# It's easier to find edges between pixels if 
-# we're able to convert the enire image into gray. 
 def canny(img):
     # Turn the images Gray
     # Processing a single channel instead of 
@@ -38,9 +44,9 @@ def canny(img):
 ```
 ![alt text](https://github.com/rchavezj/Self_Driving_Car_Projects/blob/master/Finding_Lanes/images/cannyEdgeDetection.png)
 
+We need to mask the image to 
+a region where we need to detect
 ```python
-# We need to mask the image to 
-# a region where we need to detect
 def region_of_interest(canny):
     # y-axis 
     # Bottom left corner of an image
@@ -86,10 +92,11 @@ def make_points(image, line):
     x1 = int((y1 - intercept)/slope)
     x2 = int((y2 - intercept)/slope)
     return [[x1, y1, x2, y2]]
- 
-# Our current lines are noisy from  
-# the hough transform so we need to
-# average out the lines to smooth it out.
+``` 
+Our current lines are noisy from  
+the hough transform so we need to
+average out the lines to smooth it out.
+```python
 def average_slope_intercept(image, lines):
     # Keeping an array to
     # track all positions.
@@ -131,11 +138,11 @@ def average_slope_intercept(image, lines):
 ![alt text](https://github.com/rchavezj/Self_Driving_Car_Projects/blob/master/Finding_Lanes/images/averageSmoothLines.png)
 
 
+This will return a black image
+except within the region of, 
+interest will have blue lines
+displayed within the traffic lane.
 ```python
-# This will return a black image
-# except within the region of, 
-# interest will have blue lines
-# displayed within the traffic lane.
 def display_lines(img,lines):
     # Start with a black image 
     # with the same dimensions as the
