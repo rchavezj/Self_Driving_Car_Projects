@@ -26,7 +26,6 @@ def telemetry(sid, data):
     speed = float(data['speed'])
     image = Image.open(BytesIO(base64.b64decode(data['image'])))
     image = np.asarray(image)
-    print(image)
     image = img_preprocess(image)
     image = np.array([image])
     steering_angle = float(model.predict(image))
