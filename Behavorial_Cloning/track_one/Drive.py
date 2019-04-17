@@ -7,6 +7,9 @@ import base64
 from io import BytesIO
 from PIL import Image
 import cv2
+
+from PIL import Image
+import matplotlib.pyplot as plt
  
 sio = socketio.Server()
  
@@ -20,17 +23,23 @@ def img_preprocess(img):
     img = img/255
     return img
  
- 
 @sio.on('telemetry')
 def telemetry(sid, data):
     speed = float(data['speed'])
     image = Image.open(BytesIO(base64.b64decode(data['image'])))
     image = np.asarray(image)
-    image = img_preprocess(image)
-    image = np.array([image])
-    steering_angle = float(model.predict(image))
+    preprocessed_image = img_preprocess(image)
+    preprocessed_image = np.array([preprocessed_image])
+    fig, axs = plt.subplots(1, 2, figsize=(15, 10))
+    fig.tight_layout()
+    axs[0].imshow(image)
+    axs[0].set_title('Original Image')
+    axs[1].imshow(preprocessed_image)
+    axs[1].set_title('Preprocessed Image')
+    steering_angle = float(model.predict(preprocessed_image))
     throttle = 1.0 - speed/speed_limit
     print('{} {} {}'.format(steering_angle, throttle, speed))
+    # exit()
     send_control(steering_angle, throttle)
  
 @sio.on('connect')
