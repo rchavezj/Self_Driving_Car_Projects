@@ -34,14 +34,9 @@ def telemetry(sid, data):
     image = Image.open(BytesIO(base64.b64decode(data['image'])))
     image = np.asarray(image)
     image = img_preprocess(image)
-    print(image.shape)
-    # imgplot = plt.imshow(image)
-    # plt.show()
     image = np.array([image])
-    print(image.shape)
     steering_angle = float(model.predict(image))
     throttle = 1.0 - speed/speed_limit
-    print('{} {} {}'.format(steering_angle, throttle, speed))
     send_control(steering_angle, throttle)
  
  
