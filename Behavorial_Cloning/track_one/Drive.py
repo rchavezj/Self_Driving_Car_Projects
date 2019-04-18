@@ -7,9 +7,6 @@ import base64
 from io import BytesIO
 from PIL import Image
 import cv2
-
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
  
 sio = socketio.Server()
  
@@ -35,8 +32,9 @@ def telemetry(sid, data):
     image = np.asarray(image)
     image = img_preprocess(image)
     image = np.array([image])
-    steering_angle = float(model.predict(image))
+    steering_angle = float(model.predict(image))/2
     throttle = 1.0 - speed/speed_limit
+    print('{} {} {}'.format(steering_angle, throttle, speed))
     send_control(steering_angle, throttle)
  
  
@@ -54,7 +52,7 @@ def send_control(steering_angle, throttle):
  
  
 if __name__ == '__main__':
-    model = load_model('model_track_one_v4.h5')
+    model = load_model('model_track_one_v5.h5')
     app = socketio.Middleware(sio, app)
     eventlet.wsgi.server(eventlet.listen(('', 4567)), app)
 
