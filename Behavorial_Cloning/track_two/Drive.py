@@ -13,12 +13,16 @@ sio = socketio.Server()
 app = Flask(__name__) #'__main__'
 speed_limit = 10
 def img_preprocess(img):
-    img = img[60:135,:,:]
-    img = cv2.cvtColor(img, cv2.COLOR_RGB2YUV)
-    img = cv2.GaussianBlur(img,  (3, 3), 0)
-    img = cv2.resize(img, (200, 66))
-    img = img/255
-    return img
+    new_img = img[50:140,:,:]
+    # apply subtle blur
+    new_img = cv2.GaussianBlur(new_img, (3,3), 0)
+    # scale to 66x200x3 (same as nVidia)
+    new_img = cv2.resize(new_img,(200, 66), interpolation = cv2.INTER_AREA)
+    # scale to ?x?x3
+    #new_img = cv2.resize(new_img,(80, 10), interpolation = cv2.INTER_AREA)
+    # convert to YUV color space (as nVidia paper suggests)
+    new_img = cv2.cvtColor(new_img, cv2.COLOR_BGR2YUV)
+    return new_img
  
 @sio.on('telemetry')
 def telemetry(sid, data):
@@ -46,7 +50,7 @@ def send_control(steering_angle, throttle):
  
  
 if __name__ == '__main__':
-    model = load_model('saved_models/model.h5')
+    model = load_model('model_track_two_v1.h5')
     app = socketio.Middleware(sio, app)
     eventlet.wsgi.server(eventlet.listen(('', 4567)), app)
 
