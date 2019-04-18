@@ -14,7 +14,7 @@ import matplotlib.image as mpimg
 sio = socketio.Server()
  
 app = Flask(__name__) #'__main__'
-speed_limit = 5
+speed_limit = 50
 def img_preprocess(img):
     new_img = img[50:140,:,:]
     # apply subtle blur
@@ -39,7 +39,7 @@ def telemetry(sid, data):
     # plt.show()
     image = np.array([image])
     print(image.shape)
-    steering_angle = (float(model.predict(image)) + 6.3)/2
+    steering_angle = float(model.predict(image))
     throttle = 1.0 - speed/speed_limit
     print('{} {} {}'.format(steering_angle, throttle, speed))
     send_control(steering_angle, throttle)
@@ -59,7 +59,7 @@ def send_control(steering_angle, throttle):
  
  
 if __name__ == '__main__':
-    model = load_model('model_track_one.h5')
+    model = load_model('model_track_one_v4.h5')
     app = socketio.Middleware(sio, app)
     eventlet.wsgi.server(eventlet.listen(('', 4567)), app)
 
