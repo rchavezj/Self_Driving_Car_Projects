@@ -5,7 +5,7 @@ This repo contains any projects related to self driving cars
 <img src="https://github.com/rchavezj/Self_Driving_Car_Projects/blob/master/Behavorial_Cloning/behavorial_cloning.gif" width="900" height="500" />
 
 ## [DeepTraffic](https://github.com/rchavezj/Self_Driving_Car_Projects/blob/master/DeepTraffic/net.js)
-<img src= "DeepTraffic/deeptraffic.gif">
+<img src= "DeepTraffic/deeptraffic.gif" width="900" height="500" />
 
 ## [Finding Lanes (OpenCV)](https://github.com/rchavezj/Self_Driving_Car_Projects/tree/master/Finding_Lanes)
 
