@@ -2,7 +2,7 @@
 
 The goal of this project is to detect lanes on the street using computer vision framework OpenCV. 
 
-<img src="https://media.giphy.com/media/vwFITsRSS3cbgFNuaY/giphy.gif" width="900" height="500" />
+<img src="https://github.com/rchavezj/OpenCV_Projects/blob/master/images/findingLanes.gif" width="900" height="500" />
 
 This pipeline required the following techniques: Canny edge detection, region of interest, Hough Transform and Optimizing slopes
 
